@@ -7,6 +7,7 @@ services:
       context: .
       args:
         user: abe
+        workdir: ~/code/docker-template
     # Enables the -i option in docker container
     stdin_open: true
     # Enables the -t option inn docker container

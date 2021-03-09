@@ -4,7 +4,7 @@ LABEL maintainer="Abe Valle <me@abevalle.com>"
 LABEL name="Base Dev environment"
 LABEL version="latest"
 
-ARG user=abe
+ARG user=dev
 ENV user=$user
 # Add user with zsh as default shell
 RUN useradd -ms /bin/bash $user
