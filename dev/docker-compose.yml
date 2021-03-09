@@ -1,0 +1,16 @@
+version: '2.2'
+
+services:
+  dev:
+    # Build form dockerfile in directory
+    build: .
+    # Enables the -i option in docker container
+    stdin_open: true
+    # Enables the -t option inn docker container
+    tty: true
+    restart: always
+    volumes:
+      - /home/abe/code/inventory-bridge:/opt/inventory-bridge
+    environment:
+      - NODE_ENV=development
+    network_mode: bridge 
