@@ -1,44 +1,34 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 start () {
-    
     # This block essentiall checks if this code has been run before
-    if [ $1 ]
-        then
-            echo "Please enter the domain of the website you want a proxy for:" 
-            read DOMAIN
-            checkDomain $DOMAIN
-            
-    else # If the code hasn't been run before then clear the screen
-        clear
-        echo "Please enter the domain of the website you want a proxy for:" 
-        read DOMAIN
-        checkDomain $DOMAIN
-    fi
+    echo "Please enter the domain of the website you want a proxy for:" 
+    read DOMAIN
+    checkDomain $DOMAIN domainOrIp start
 }
 
-checkDomain () {
-    DOMAIN_REGEX='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
-
-    echo $1 | grep -qE "$DOMAIN_REGEX"
-    case $? in 
-        1)  clear
-            echo DOMAIN RESULT: $?
-            echo "You did not enter a website try again..."
-            start 1
-        ;;
-        0)  getProxyInfoIp $DOMAIN
-    esac
-}
-
+# Ask the user if they want to use a Domain or Ip as thair proxy_pass
 domainOrIp () {
-    echo "Are you proxying to an ip or proxy?"
+    echo "Are you using an ip or domain? This would be proxy_pass: "
+    echo "1) Domain "
+    echo "2) IP"
+    read domainOrIp_opt
+
+    case $domainOrIp_opt in
+    "") echo "You didn't pick anything. Please try again"
+        domainOrIp 
+    ;;
+    1) getProxyInfoDomain $DOMAIN
+    ;;
+    2) getProxyInfoIp $DOMAIN
+    esac
+
 }
 
-getProxyInfoDomain () {
-    echo "test";
-}
-
+# If the user chooses to use an IP as their proxy_pass get the ip then validate it
 getProxyInfoIp () {
     echo "      Making proxy for $DOMAIN      "
     echo "   You chose to redirect to an IP   "
@@ -48,34 +38,48 @@ getProxyInfoIp () {
     checkValidIp $checkValidIp
 }
 
+# If the user wants to use a domain as thair proxy_pass get the domain then validate it
 getProxyInfoDomain () {
     echo "      Making proxy for $DOMAIN      "
     echo "  You chose to redirect to a Domain  "
     echo "-------------------------------------"
-    echo "Please enter the ip your wish to proxy to"
-    read PROXY_IP_HOST
-    checkValidIp $checkValidIp
+    echo "Please enter the domain your wish to proxy to"
+    read $PROXY_DOMAIN_HOST
+    checkDomain $PROXY_DOMAIN_HOST getProxyPort getProxyInfoDomain
 }
 
-checkValidIp () {
-    ipRegex='^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$'
-    echo $PROXY_IP_HOST | grep -qE $ipRegex
-    echo $?
+# This block is self explanitory checks domain with regex
+checkDomain () {
+    DOMAIN_REGEX='^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$'
+
+    echo $1 | grep -qE "$DOMAIN_REGEX"
     case $? in 
-    1)  echo "IP VALID"
+        1)  echo -e "${RED} /!\ You did not enter a vlid domain try again /!\ ${NC}"
+            $3
+        ;;
+        0)  $2
+    esac
+}
+
+# Validates the ip againts regex
+checkValidIp () {
+    ipRegex='^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+    echo $PROXY_IP_HOST | grep -qE "$ipRegex"
+    case $? in 
+    '0')  getProxyPort
     ;;
-    0)  clear
-        echo "          /!\ IP VALID /!\\"
+    '1')  echo $?
+        echo "FALSE"
+        echo -e "        ${RED}/!\ IP INVALID /!\ ${NC}"
         getProxyInfoIp
     esac
 }
 
-start
+getProxyPort () {
+    echo "Enter a port: "
+}
 
-# echo "Where would you like the domain to point to:"
-# read PROXY_HOST
-# echo "What port should the proxy point to:"
-# read PROXY_PORT
+start
 
 # echo "Your reverse proxy will point to $PROXY_HOST:$PROXY_PORT from $DOMAIN"
 
