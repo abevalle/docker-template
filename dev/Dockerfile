@@ -1,24 +1,24 @@
 FROM debian:latest
-# Optional things you can uncomment this and fill in your own info
-#LABEL maintainer="Fist Last <email@example.com>"
-#LABEL name="<App name>"
-#LABEL version="<version>"
+# Optional things you can uncomment this and fill in your own info 
+LABEL maintainer="Abe Valle <me@abevalle.com>"
+LABEL name="Base Dev environment"
+LABEL version="latest"
 
-ARG USER=$USER
-
+ARG user=abe
+ENV user=$user
 # Add user with zsh as default shell
-RUN useradd -ms /bin/bash ${USER}
+RUN useradd -ms /bin/bash $user
 
 # Update and upgrade apt sources and applications
 RUN apt-get update -y \
     # Install sudo
-    apt-get install sudo -y 
+    && apt-get install sudo -y 
 
 # Make sudo passwordless
-RUN echo ${USER} "ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
+RUN echo "${user} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
 
 # Changer user
-USER ${USER}
+USER $user
 
 # Install git wget ne zsh
 RUN sudo apt-get install git wget ne zsh -y
@@ -27,7 +27,7 @@ RUN sudo apt-get install git wget ne zsh -y
 RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install nvm
-ENV NVM_DIR /home/${USER}/.nvm
+ENV NVM_DIR /home/$user/.nvm
 RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | zsh 
     # Install node and npm via NVM
 RUN . $NVM_DIR/nvm.sh \
@@ -35,4 +35,4 @@ RUN . $NVM_DIR/nvm.sh \
 
 CMD ["zsh"]
 # Set working dir
-WORKDIR /opt/inventory-bridge
+WORKDIR /opt/
