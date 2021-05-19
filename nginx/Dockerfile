@@ -17,8 +17,11 @@ RUN echo "nginx ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
 # Change user to nginx
 USER nginx
 # Install nginx
-RUN apt-get install nginx
-
+RUN sudo apt-get install nginx -y
+# Install Certbot Certbot nginx and curl
+RUN sudo apt-get install certbot python-certbot-nginx curl -y
+# Install Custom Nginx Utils
+RUN sudo curl -o- https://github.com/abevalle/nginx-utils/raw/master/install.sh | bash
 
 
 CMD ["bash"]
