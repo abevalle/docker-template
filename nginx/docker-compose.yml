@@ -1,8 +1,8 @@
-version: '2'
+version: '2.2'
 
 services:
     nginx:
-        build: ./dir
+        build:
             context: .
             restart: always
             volumes:
