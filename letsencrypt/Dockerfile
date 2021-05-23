@@ -23,7 +23,7 @@ USER $user
 # Install git wget ne zsh
 RUN sudo apt-get install git wget ne -y
 
-RUN sudo apt install snapd -y
+RUN sudo apt install snapd -y sudo snap install core
 
 CMD ["bash"]
 
