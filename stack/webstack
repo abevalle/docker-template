@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  nginx:
+    image: nginx
+    networks:
+      - outside
+    expose:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/www:/var/www
+      - /etc/nginx/sites-available:/etc/nginx/sites-available
+      - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+
+      
+  certbot:
+    image: certbot
+    volumes:
+      - /var/www:/var/www
+      - /etc/nginx/sites-available:/etc/nginx/sites-available
+      - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+    
+networks:
+  outside:
+    external:
+      name: "host"
