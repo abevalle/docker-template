@@ -1,15 +1,15 @@
 version: '2.3'
 
 services:
-  nginx:
-      image: nginx
+  bridge:
+    build:
+      context: .
+    stdin_open: true
+    # Enables the 
       restart: always
       stdin_open: true
       # Enables the -t option inn docker container
       tty: true
       volumes:
-        - /etc/nginx/sites-available:/etc/nginx/sites-available
-        - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
-        - /var/www/:/var/www
-        - /var/log/nginx/:/var/log/nginx/
+        - /opt/schedulr-bridge:/opt/schedulr-bridge
       network_mode: host
