@@ -5,10 +5,10 @@ services:
     build:
       context: .
       restart: always
+      network_mode: host
       volumes:
         - /etc/nginx/sites-available:/etc/nginx/sites-available
         - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
         - /var/www/:/var/www
         - /var/log/nginx/:/var/log/nginx/
         - /etc/letsencrypt/:/etc/letsencrypt/
-      network_mode: host
