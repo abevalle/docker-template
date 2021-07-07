@@ -11,4 +11,4 @@ services:
         - /var/www/:/var/www
         - /var/log/nginx/:/var/log/nginx/
         - /etc/letsencrypt/:/etc/letsencrypt/
-      network_mode: host
+      network: host
