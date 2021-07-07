@@ -1,13 +1,13 @@
-version: '3'
+version: '3.4'
 services:
   nginx:
     build:
       context: .
-    restart: always
-    volumes:
-      - /etc/nginx/sites-available:/etc/nginx/sites-available
-      - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
-      - /var/www/:/var/www
-      - /var/log/nginx/:/var/log/nginx/
-      - /etc/letsencrypt/:/etc/letsencrypt/
-    network: host
+      restart: always
+      volumes:
+        - /etc/nginx/sites-available:/etc/nginx/sites-available
+        - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+        - /var/www/:/var/www
+        - /var/log/nginx/:/var/log/nginx/
+        - /etc/letsencrypt/:/etc/letsencrypt/
+      network: host
