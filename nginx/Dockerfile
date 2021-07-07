@@ -21,9 +21,8 @@ RUN sudo apt-get install apt-utils ne zsh -y
 RUN sudo apt-get install git curl wget -y
 RUN sudo sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 RUN sudo apt-get install nginx -y
-RUN cd /var/www/ && sudo git clone https://github.com/abevalle/valleus-http-error-pages.git
-RUN cd valleus-http-error-pages && sudo mv globalError /etc/nginx
-
+RUN cd /var/www/ && sudo git clone https://github.com/abevalle/valleus-http-error-pages.git && cd valleus-http-error-pages && sudo mv globalError /etc/nginx
+RUN curl -o- https://github.com/abevalle/nginx-utils/raw/master/dist/nginx-utils | bash
 
 CMD ["bash"]
 WORKDIR /etc/nginx/
