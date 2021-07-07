@@ -1,0 +1,18 @@
+# Use postgres/example user/password credentials
+version: '2.3'
+
+services:
+
+  pg:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: chang3m3
+      
+
+  admin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+        PG_DEFAULT_EMAIL: admin@valle.us
+        PG_DEFAULT_PASSWORD: chang3m3
