@@ -5,9 +5,19 @@ services:
       context: .
       restart: always
       volumes:
-        - /etc/nginx/sites-available:/etc/nginx/sites-available
-        - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
-        - /var/www/:/var/www
-        - /var/log/nginx/:/var/log/nginx/
-        - /etc/letsencrypt/:/etc/letsencrypt/
+        - type: bind
+          source: /etc/nginx/sites-available
+          target: /etc/nginx/sites-available
+        - type: bind
+          source: /etc/nginx/sites-enabled
+          target: /etc/nginx/sites-enabled
+        - type: bind
+          source: /var/www/
+          target: /var/www
+        - type: bind
+          source: /var/log/nginx/
+          target: /var/log/nginx/
+        - type: bind
+          source: /etc/letsencrypt/
+          target: /etc/letsencrypt/
       network: host
