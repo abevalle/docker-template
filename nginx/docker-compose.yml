@@ -11,7 +11,4 @@ services:
         - /var/www/:/var/www
         - /var/log/nginx/:/var/log/nginx/
         - /etc/letsencrypt/:/etc/letsencrypt/
-      ports:
-        - 80:80
-        - 443:433
     network_mode: host
