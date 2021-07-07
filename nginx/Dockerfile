@@ -17,11 +17,12 @@ RUN echo "nginx ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user
 # Change user to nginx
 USER nginx
 # Install nginx
-RUN sudo apt-get install nginx github ne -y
+RUN sudo apt-get install apt-utils ne zsh -y
+RUN sudo apt-get install git curl wget -y
 RUN sudo sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN sudo apt-get install nginx -y
 RUN cd /var/www/ && sudo git clone https://github.com/abevalle/valleus-http-error-pages.git
 RUN cd valleus-http-error-pages && sudo mv globalError /etc/nginx
-RUN 
 
 
 CMD ["bash"]

@@ -1,17 +1,17 @@
-version: '2.2'
+version: '2'
 
 services:
-    nginx:
-        build:
-            context: .
-            restart: always
-            volumes:
-                - /etc/nginx/sites-available:/etc/nginx/sites-available
-                - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
-                - /var/www/:/var/www
-                - /var/log/nginx/:/var/log/nginx/
-                - /etc/letsencrypt/:/etc/letsencrypt/
-            ports:
-                - 80:80
-                - 443:433
-            network_mode: host
+  nginx:
+    build:
+      context: .
+      restart: always
+      volumes:
+        - /etc/nginx/sites-available:/etc/nginx/sites-available
+        - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+        - /var/www/:/var/www
+        - /var/log/nginx/:/var/log/nginx/
+        - /etc/letsencrypt/:/etc/letsencrypt/
+      ports:
+        - 80:80
+        - 443:433
+    network_mode: host
