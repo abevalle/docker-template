@@ -8,11 +8,14 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: chang3m3
-      
+    ports:
+       - 5432:5432
 
   admin:
     image: dpage/pgadmin4
     restart: always
     environment:
-        PG_DEFAULT_EMAIL: admin@valle.us
-        PG_DEFAULT_PASSWORD: chang3m3
+        PGADMIN_DEFAULT_EMAIL: admin@valle.us
+        PGADMIN_DEFAULT_PASSWORD: chang3m3
+    ports:
+        - 5051:80
